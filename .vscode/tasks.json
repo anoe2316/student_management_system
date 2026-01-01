@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build student",
+      "type": "shell",
+      "command": "clang",
+      "args": ["-Wall", "-Wextra", "-std=c11", "main.c", "student.c", "-o", "student"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"],
+      "options": { "cwd": "${workspaceFolder}" }
+    }
+  ]
+}
