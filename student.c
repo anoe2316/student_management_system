@@ -116,7 +116,7 @@ void searchAction(STUDENT *student,int *count)
     int tar;
     printf("Enter the student number :");
     scanf("%d", &tar);
-    for(int i = 1;i <= *count;i++)
+    for(int i = 0;i < *count;i++)
     {
         if(tar == student[i].id)
         {
@@ -142,7 +142,7 @@ void deleteAction(STUDENT *student,int *count)
         if(tar == student[i].id)
         {
             
-            for(int j = i;j <= (*count - 1);j++)
+            for(int j = i;j < (*count - 1);j++)
             {
                 student[j] = student[j+1];
             }
@@ -153,7 +153,8 @@ void deleteAction(STUDENT *student,int *count)
             return;
         }
     }
-    printf("Student not found.\n");    
+    printf("\nStudent not found.\n\n");
+    printf("\n------------------------\n\n");  
     
 }
 

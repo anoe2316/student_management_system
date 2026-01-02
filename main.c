@@ -10,26 +10,32 @@ int main()
     while(1)
     {
         printAction();
+        printf("Enter your action : ");
         scanf("%d", &a);
         while (getchar() != '\n');
-        if(a == 5) break;
-        if(a == 1) 
+        switch(a)
         {
-            student = addAction(student, &count); //add new student and return student pointer
+            case 1: 
+                student = addAction(student, &count); //add new student and return student pointer
+                printStudent(&student[count-1]); //print recently add student info
+                saveNew("student.txt", student,&count);
+                break;
+            case 2:
+                showAction(student,&count); //show all students
+                break;
+            case 3:
+                searchAction(student,&count); //search student by student number
+                break;
+            case 4:
+                deleteAction(student,&count); //delete student by student number
+                saveDelete("student.txt", student, &count);
+                break;
+            case 5:
+                return 0;
+            default:
+                printf("Invalid Input : Try Again!\n\n");
             
-            printStudent(&student[count-1]); //print recently add student info
-            saveNew("student.txt", student,&count);
-        }else if(a == 2)
-        {
-            showAction(student,&count); //show all students
-            
-        }else if(a == 3)
-        {
-            searchAction(student,&count); //search student by student number
-        }else if(a == 4)
-        {
-            deleteAction(student,&count); //delete student by student number
-            saveDelete("student.txt", student, &count);
+                
         }
         
     }
