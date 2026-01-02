@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include "student.h"
 
-//number of students
+
 int stdno = 0;// counting student number
-int count = 0;
+int count; //number of students
 
 STUDENT* readFile(const char *filename, int *stdno, int *count)
 {
@@ -40,7 +40,7 @@ STUDENT* readFile(const char *filename, int *stdno, int *count)
         
     }
     *stdno = student[*count - 1].id; //last student id;
-    return student;
+    return student; //returning student pointer
     
 
 }
@@ -56,13 +56,14 @@ void printAction(void)
 
 STUDENT* addAction(STUDENT*student, int *count)
 {
-    STUDENT *new = realloc(student, sizeof(STUDENT) * ((*count) + 1)); //adding new student
+    STUDENT *new = realloc(student, sizeof(STUDENT) * ((*count) + 1)); //recreating new student storage by realloc
      
-    student = new;
-    STUDENT *s = &student[*count];
+    student = new;          //replacing new storage to 구조체
+    STUDENT *s = &student[*count];      //initiate the last index
+    
 
     printf("Enter the name of Student : ");
-    fgets(s->name, sizeof(s->name), stdin);
+    fgets(s->name, sizeof(s->name), stdin); 
     s->name[strcspn(s->name,"\n")] = '\0';
     for(int i = 0;s->name[i];i++)
     {
@@ -77,13 +78,25 @@ STUDENT* addAction(STUDENT*student, int *count)
     
 }
 
+void saveNew(const char *filename, STUDENT* student, int *count)
+{
+    FILE *fp = fopen(filename, "w");
+    for(int i = 0;i < *count;i++)
+    {
+        fprintf(fp,"%s,%d,%.1f", student[i].name,student[i].id,student[i].gpa);
+        fprintf(fp,"\n");
+    }
+    printf("\nStudent saved successfully!");
+    printf("\n------------------------\n\n");
+}
+
 void printStudent(const STUDENT *student)
 {
     printf("\nStudent Registered : \n\n");
     printf("Name : %s\n", (student)->name);
     printf("Student Number : %d\n", (student)->id);
     printf("GPA : %.1f\n", (student)->gpa);
-    printf("\n------------------------\n\n");
+    
 }
 
 void showAction(STUDENT *student,int *count)
@@ -140,7 +153,16 @@ void deleteAction(STUDENT *student,int *count)
             return;
         }
     }
-    printf("Student not found.\n");
+    printf("Student not found.\n");    
     
-    
+}
+
+void saveDelete(const char *filename, STUDENT* student, int *count)
+{
+    FILE *fp = fopen(filename, "w");
+    for(int i = 0;i < *count;i++)
+    {
+        fprintf(fp,"%s,%d,%.1f", student[i].name,student[i].id,student[i].gpa);
+        fprintf(fp,"\n");
+    }
 }

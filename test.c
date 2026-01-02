@@ -14,22 +14,23 @@ int stdno = 1000;
 int count = 0;
 STUDENT student[100];
 
-// STUDENT* addstudent()
-// {
-//     STUDENT* student = (STUDENT*)malloc(sizeof(STUDENT));
-//             printf("Enter the name:");
-//             fgets(student->name, sizeof(student->name), stdin);
-//             student->name[strcspn(student->name,"\n")] = '\0';
-//             student->id = ++stdno;
-//             printf("Enter the GPA : ");
-//             scanf("%f", &student->gpa);
-//             printf("\nStudent Registered : \n\n");
-//             printf("Name : %s\n", student->name);
-//             printf("Student Number : %d\n", student->id);
-//             printf("GPA : %.1f\n", student->gpa);
-//             printf("\n------------------------\n\n");
-//             return student;
-// }
+STUDENT* addstudent()
+{
+    STUDENT* student = (STUDENT*)malloc(sizeof(STUDENT));
+            printf("Enter the name:");
+            fgets(student->name, sizeof(student->name), stdin);
+            student->name[strcspn(student->name,"\n")] = '\0';
+            student->id = ++stdno;
+            printf("Enter the GPA : ");
+            scanf("%f", &student->gpa);
+            printf("\nStudent Registered : \n\n");
+            printf("Name : %s\n", student->name);
+            printf("Student Number : %d\n", student->id);
+            printf("GPA : %.1f\n", student->gpa);
+            printf("\n------------------------\n\n");
+            
+            return student;
+}
 void printAction(void)
 {
     printf("1.Add Student\n");
@@ -53,7 +54,7 @@ void readFile(const char*filename)
     fp = fopen(filename, "r");
     for(int i = 1;i <= count;i++)
     {
-        
+
         fgets(line,sizeof(line),fp);
         line[strcspn(line,"\n")] = '\0';
 
@@ -78,7 +79,7 @@ int main(){
     int a;
     
     
-    readFile("test.txt");
+    // readFile("test.txt");
 //    while(1)       
 //     {
 //         printAction();
