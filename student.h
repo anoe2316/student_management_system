@@ -11,11 +11,13 @@ typedef struct
 STUDENT student[100];
 extern int count;
 extern int stdno;
+STUDENT *readFile(const char *filename, int *stdno, int *count);
 void printAction(void);
-STUDENT* addAction(void);
-void printStudent(STUDENT**student);
-void showAction(STUDENT *student[],int *count);
-void deleteAction(STUDENT *student[],int *count);
-void searchAction(STUDENT *student[],int *count);
+STUDENT* addAction(STUDENT*student, int *count);
+void printStudent(const STUDENT *s);
+void showAction(STUDENT *student,int *count);
+void deleteAction(STUDENT *student,int *count);
+void searchAction(STUDENT *student,int *count);
+
 
 #endif
