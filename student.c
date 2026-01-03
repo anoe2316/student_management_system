@@ -5,22 +5,32 @@
 #include "student.h"
 
 
-int stdno = 0;// counting student number
+int stdno = 1000;// counting student number
 int count; //number of students
 
 STUDENT* readFile(const char *filename, int *stdno, int *count)
 {
     char line[100];
     char* token;
+    char name[20];
+    int id;
+    float gpa;
     *count = 0;
     FILE *fp = fopen(filename, "r");
     
     while (fgets(line, sizeof(line), fp)) 
     {
-        (*count)++;   //number of line or number of students     
+        (*count)++;   //number of line or number of students 
+        
+            
     }
     fclose(fp);
-
+    if (sscanf(line, "%[^,],%d,%f",
+               name, &id, &gpa) != 3) {
+        
+        printf("Please recheck File!\n");
+    }
+    
     fp = fopen(filename, "r");
     STUDENT*student = malloc(sizeof(STUDENT) * (*count)); //creating new student
     
@@ -37,9 +47,15 @@ STUDENT* readFile(const char *filename, int *stdno, int *count)
 
         token = strtok(NULL,",");
         student[i].gpa = atof(token);
-        
     }
+    fclose(fp);
     *stdno = student[*count - 1].id; //last student id;
+    if(*count == 0) 
+    {
+        *stdno = 1000;
+        free(student);
+        return NULL;
+    }
     return student; //returning student pointer
     
 
@@ -56,9 +72,7 @@ void printAction(void)
 
 STUDENT* addAction(STUDENT*student, int *count)
 {
-    STUDENT *new = realloc(student, sizeof(STUDENT) * ((*count) + 1)); //recreating new student storage by realloc
-     
-    student = new;          //replacing new storage to 구조체
+    student = realloc(student, sizeof(STUDENT) * ((*count) + 1)); //recreating new student storage by realloc
     STUDENT *s = &student[*count];      //initiate the last index
     
 
@@ -71,9 +85,19 @@ STUDENT* addAction(STUDENT*student, int *count)
     }
     s->id = ++stdno;
     
-    printf("Enter the GPA : ");
-    scanf("%f", &s->gpa);
-    (*count)++; 
+    while(1)
+    {
+        printf("Enter the GPA : ");
+        scanf("%f", &s->gpa);
+        if(s->gpa > 0 && s->gpa <= 4.5)
+        {
+            (*count)++;
+            break;           
+        }        
+        printf("Invalid GPA.Try again!\n");
+    }
+    
+    
     return student;    
     
 }
@@ -86,6 +110,7 @@ void saveNew(const char *filename, STUDENT* student, int *count)
         fprintf(fp,"%s,%d,%.1f", student[i].name,student[i].id,student[i].gpa);
         fprintf(fp,"\n");
     }
+    fclose(fp);
     printf("\nStudent saved successfully!");
     printf("\n------------------------\n\n");
 }
@@ -166,4 +191,5 @@ void saveDelete(const char *filename, STUDENT* student, int *count)
         fprintf(fp,"%s,%d,%.1f", student[i].name,student[i].id,student[i].gpa);
         fprintf(fp,"\n");
     }
+    fclose(fp);
 }
